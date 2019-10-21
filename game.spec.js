@@ -10,24 +10,25 @@ describe("The test environment", function() {
   });
 });
 
-// Verifier que howManyPlayers retourne le bon nombre de joueurs
+describe ("howManyPlayers", function() {
+    describe ("When there is 1 player", function() {
+       let players = ["Aryana"]
 
-describe ("When there is 1 player", function() {
-   let players = ["Aryana"]
-
-    it ("returns 1", function() {
-        let onePlayerGame = new Game()
-        onePlayerGame.players = players
-        expect(onePlayerGame.howManyPlayers()).toEqual(1)
+        it ("returns 1", function() {
+            let onePlayerGame = new Game()
+            onePlayerGame.players = players
+            expect(onePlayerGame.howManyPlayers()).toEqual(1)
+        });
     });
-});
-describe ("When there are 2 players", function() {
-   let players = ["Aryana", "Megane"]
 
-    it ("returns 2", function() {
-        let onePlayerGame = new Game()
-        onePlayerGame.players = players
-        expect(onePlayerGame.howManyPlayers()).toEqual(2)
+    describe ("When there are 2 players", function() {
+       let players = ["Aryana", "Megane"]
+
+        it ("returns 2", function() {
+            let onePlayerGame = new Game()
+            onePlayerGame.players = players
+            expect(onePlayerGame.howManyPlayers()).toEqual(2)
+        });
     });
 });
 
@@ -36,7 +37,28 @@ describe ("When there are 2 players", function() {
     // ne se lance pas pour plus de 6 joueurs
     // sinon, se lance
 
-// Dans quel cas gagne-t-on ? Tester didPlayerWin
+describe ("didPlayerWin", function() {
+    describe ("Is false when current player has 6 coins", function() {
+        let game = new Game()
+        game.purses = [6, 4, 7]
+
+        it ("returns false when purse is 6", function() {
+            game.currentPlayer = 0
+            expect(game.didPlayerWin()).toBe(false)
+        });
+
+        it ("returns true when purse is below 6", function() {
+            game.currentPlayer = 1
+            expect(game.didPlayerWin()).toBe(true)
+        });
+
+        it ("returns true when purse is above 6", function() {
+            game.currentPlayer = 2
+            expect(game.didPlayerWin()).toBe(true)
+        });
+    });
+});
+
 
 // ? tester les cases et catégories --> en initialisant
 
@@ -62,15 +84,26 @@ describe ("When there are 2 players", function() {
 
 
 describe ("roll", function() {
-    describe ("When the roll is greater than 11", function() {
-        let roll = 12
+    describe ("When the roll sends you to as square greater than 12", function() {
+        let roll = 6
 
-        it ("the player recule de 12 cases", function() {
+        it ("the player goes back 12 squares", function() {
             let onePlayerGame = new Game()
             onePlayerGame.players = ["toto"]
-            onePlayerGame.places[0] = 1
+            onePlayerGame.places[0] = 10
             onePlayerGame.roll(roll)
-            expect(onePlayerGame.places[0]).toEqual(1)
+            expect(onePlayerGame.places[0]).toEqual(4)
+        });
+    });
+
+    describe ("When the roll sends you to a square 12 or above", function() {
+        let roll = 6
+        it ("the player goes back 12 squares", function() {
+            let onePlayerGame = new Game()
+            onePlayerGame.players = ["toto"]
+            onePlayerGame.places[0] = 6
+            onePlayerGame.roll(roll)
+            expect(onePlayerGame.places[0]).toEqual(0)
         });
     });
 });
