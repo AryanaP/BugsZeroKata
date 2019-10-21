@@ -1,14 +1,1 @@
     .idea/
-
-
-
-[
-  {
-    "Id": "string",
-    "MetricStat": {
-      "Metric": {
-        "SearchableDocuments": "string"
-      }
-    }
-  }
-]
